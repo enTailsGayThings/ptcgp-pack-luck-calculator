@@ -38,8 +38,6 @@
             font-size: 16px;
             width: 100px;
             margin-right: 10px;
-        }
-        input[type="number"] {
             -webkit-appearance: none;
             -moz-appearance: textfield;
             appearance: none;
@@ -51,7 +49,7 @@
             color: white;
             border: none;
             cursor: pointer;
-            border-radius: 10px;
+            border-radius: 5px;
         }
         .button:hover {
             background-color: #45a049;
@@ -66,43 +64,43 @@
 <body>
     <div class="container">
         <h1>Card Rarity Luck Calculator</h1>
-
-        <!-- Global Packs Opened Input -->
         <div class="section">
             <label class="label">Enter the number of packs you have opened:</label>
             <div class="input-group">
-                <input type="number" id="packsOpened" placeholder="Packs" min="0" />
+                <input type="number" id="packsOpened" placeholder="0" min="0" />
             </div>
         </div>
-
-        <!-- Crown Cards Section -->
         <div class="section">
-            <label class="label">Crown Cards (1% rarity):</label>
+            <label class="label">Calculate Your Crown Card Luck:</label>
             <div class="input-group">
-                <input type="number" id="crownCards" placeholder="" min="0" />
+                <input type="number" id="crownCards" placeholder="0" min="0" />
                 <button class="button" onclick="calculateLuck('crown')">Calculate Luck</button>
             </div>
             <div id="crownResult" class="result"></div>
         </div>
-
-        <!-- Triple Star Cards Section -->
         <div class="section">
-            <label class="label">Triple Star Cards (2% rarity):</label>
+            <label class="label">Calculate Your Three Star Luck:</label>
             <div class="input-group">
-                <input type="number" id="tripleStarCards" placeholder="" min="0" />
-                <button class="button" onclick="calculateLuck('tripleStar')">Calculate Luck</button>
+                <input type="number" id="threeStarCards" placeholder="0" min="0" />
+                <button class="button" onclick="calculateLuck('threeStar')">Calculate Luck</button>
             </div>
-            <div id="tripleStarResult" class="result"></div>
+            <div id="threeStarResult" class="result"></div>
         </div>
-
-        <!-- Double Star Cards Section -->
         <div class="section">
-            <label class="label">Double Star Cards (3% rarity):</label>
+            <label class="label">Calculate Your Two Star Luck:</label>
             <div class="input-group">
-                <input type="number" id="doubleStarCards" placeholder="" min="0" />
-                <button class="button" onclick="calculateLuck('doubleStar')">Calculate Luck</button>
+                <input type="number" id="twoStarCards" placeholder="0" min="0" />
+                <button class="button" onclick="calculateLuck('twoStar')">Calculate Luck</button>
             </div>
-            <div id="doubleStarResult" class="result"></div>
+            <div id="twoStarResult" class="result"></div>
+        </div>
+        <div class="section">
+            <label class="label">Calculate Your One Star Luck:</label>
+            <div class="input-group">
+                <input type="number" id="oneStarCards" placeholder="0" min="0" />
+                <button class="button" onclick="calculateLuck('oneStar')">Calculate Luck</button>
+            </div>
+            <div id="oneStarResult" class="result"></div>
         </div>
     </div>
 
@@ -115,14 +113,18 @@
                 rarityRate = 0.01;
                 numCardsInput = document.getElementById('crownCards').value;
                 resultElement = document.getElementById('crownResult');
-            } else if (cardType === 'tripleStar') {
+            } else if (cardType === 'threeStar') {
                 rarityRate = 0.02;
-                numCardsInput = document.getElementById('tripleStarCards').value;
-                resultElement = document.getElementById('tripleStarResult');
-            } else if (cardType === 'doubleStar') {
+                numCardsInput = document.getElementById('threeStarCards').value;
+                resultElement = document.getElementById('threeStarResult');
+            } else if (cardType === 'twoStar') {
                 rarityRate = 0.03;
-                numCardsInput = document.getElementById('doubleStarCards').value;
-                resultElement = document.getElementById('doubleStarResult');
+                numCardsInput = document.getElementById('twoStarCards').value;
+                resultElement = document.getElementById('twoStarResult');
+            } else if (cardType === 'oneStar') {
+                rarityRate = 0.04;
+                numCardsInput = document.getElementById('oneStarCards').value;
+                resultElement = document.getElementById('oneStarResult');
             }
 
             const numCards = parseInt(numCardsInput) || 0;
