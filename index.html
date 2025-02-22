@@ -30,6 +30,9 @@
         .label {
             font-weight: bold;
         }
+        .label {
+            font-weight: medium;
+        }
         .input-group {
             margin-top: 5px;
         }
@@ -38,23 +41,25 @@
             font-size: 16px;
             width: 100px;
             margin-right: 10px;
+            display: flex;
         }
         .button {
             padding: 10px;
             font-size: 16px;
-            background-color: #4CAF50;
+            font-weight: bold;
+            background-color: #84c8d9;
             color: white;
             border: none;
             cursor: pointer;
             border-radius: 5px;
         }
         .button:hover {
-            background-color: #45a049;
+            background-color: #66abbd;
         }
         .result {
             margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
+            font-size: 16px;
+            font-weight: lighter;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -70,40 +75,45 @@
     <div class="container">
         <h1>Card Rarity Luck Calculator</h1>
         <div class="section">
-            <label class="label">Enter the number of packs you have opened:</label>
+            <label class="label">Number of packs you have opened:</label>
             <div class="input-group">
+                <label class="prompt">Packs:</label>
                 <input type="number" id="packsOpened" placeholder="0" min="0" />
             </div>
         </div>
         <div class="section">
-            <label class="label">Calculate Your Crown Card Luck:</label>
+            <label class="label">Crown Card Luck:</label>
             <div class="input-group">
+                <label class="prompt">Number of crown cards pulled:</label>
                 <input type="number" id="crownCards" placeholder="0" min="0" />
-                <button class="button" onclick="calculateLuck('crown')">Calculate Luck</button>
+                <button class="button" onclick="calculateLuck('crown')">Submit</button>
             </div>
             <div id="crownResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label">Calculate Your Three Star Luck:</label>
+            <label class="label">Three Star Luck:</label>
             <div class="input-group">
+                <label class="prompt">Number of three star cards pulled:</label>
                 <input type="number" id="threeStarCards" placeholder="0" min="0" />
-                <button class="button" onclick="calculateLuck('threeStar')">Calculate Luck</button>
+                <button class="button" onclick="calculateLuck('threeStar')">Submit</button>
             </div>
             <div id="threeStarResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label">Calculate Your Two Star Luck:</label>
+            <label class="label">Two Star Luck:</label>
             <div class="input-group">
+                <label class="prompt">Number of two star cards pulled:</label>
                 <input type="number" id="twoStarCards" placeholder="0" min="0" />
-                <button class="button" onclick="calculateLuck('twoStar')">Calculate Luck</button>
+                <button class="button" onclick="calculateLuck('twoStar')">Submit</button>
             </div>
             <div id="twoStarResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label">Calculate Your One Star Luck:</label>
+            <label class="label">One Star Luck:</label>
             <div class="input-group">
+                <label class="prompt">Number of one star cards pulled:</label>
                 <input type="number" id="oneStarCards" placeholder="0" min="0" />
-                <button class="button" onclick="calculateLuck('oneStar')">Calculate Luck</button>
+                <button class="button" onclick="calculateLuck('oneStar')">Submit</button>
             </div>
             <div id="oneStarResult" class="result"></div>
         </div>
