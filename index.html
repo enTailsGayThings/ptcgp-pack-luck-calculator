@@ -181,7 +181,7 @@
                 resultElement.innerText = 'Those values seem suspiciously unlikely. Are you sure you entered them correctly?'
             } else if (packsOpened > 10000 || numCards > 1000) {
                 resultElement.innerText = 'Those values are unreasonably large! Please enter smaller amounts.'
-            } else if (packsOpened < 0 || numCards < 0) {
+            } else if (packsOpened <= 0 || numCards < 0) {
                 resultElement.innerText = 'Please enter values for both the number of packs and number of cards.';
             } else {
                 const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rate);
@@ -190,12 +190,12 @@
                 const plural = numCards > 1 ? 's' : '';
                 const item = cardType == 'rare' ? 'pack' : 'card';
                 const quality = exactProbability < 36/100 ? (atLeastProbability < 5/100 ? 'amazing!!!\nRun into any Jirachi lately?' : atLeastProbability < 10/100 ? 'really good!!' : atLeastProbability < 20/100 ? 'good!' : atLeastProbability < 36/100 ? 'somewhat good.' : (atLeastProbability < 63/100) || (moreThanProbability < 36/100) ? 'pretty average.' : moreThanProbability < 80/100 ? 'somewhat bad' : moreThanProbability < 90/100 ? 'bad!' : moreThanProbability < 95/100 ? 'really bad!!' : 'terrible!!!\nRun into any Absol lately?') : 'pretty average';
-                resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: <strong>${(lessThanProbability * 100).toFixed(3)}%</strong>`;
-                resultElement.innerText += `\nChance of pulling exactly ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: <strong>${(exactProbability * 100).toFixed(3)}%</strong>`;
-                resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: <strong>${(moreThanProbability * 100).toFixed(3)}%</strong>`;
-                resultElement.innerText += `\n\nExpected number of packs needed to pull ${numCards} ${cardType} ${item}${plural}: <strong>${(numCards/rate).toFixed(1)}</strong>`
-                resultElement.innerText += `\nExpected number of ${cardType} ${item}s to pull in ${packsOpened} packs: <strong>${(packsOpened*rate).toFixed(1)}</strong>`
-                resultElement.innerText += `\n\n<em>Your ${cardType} ${item} luck is ${quality}</em>`
+                resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nChance of pulling exactly ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(moreThanProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\n\nExpected number of packs needed to pull ${numCards} ${cardType} ${item}${plural}: ${(numCards/rate).toFixed(1)}`
+                resultElement.innerText += `\nExpected number of ${cardType} ${item}s to pull in ${packsOpened} packs: ${(packsOpened*rate).toFixed(1)}`
+                resultElement.innerText += `\n\nYour ${cardType} ${item} luck is ${quality}`
             }
         }
 
