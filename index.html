@@ -187,7 +187,7 @@
                 const atLeastProbability = 1 - lessThanProbability;
                 const plural = numCards > 1 ? 's' : '';
                 const item = cardType == 'rare' ? 'pack' : 'card';
-                const quality = exactProbability < 40/100 ? (atLeastProbability < 5/100 ? 'amazing!!! Run into any Jirachi lately?' : atLeastProbability < 10/100 ? 'really good!!' : atLeastProbability < 20/100 ? 'good!' : atLeastProbability < 40/100 ? 'somewhat good.' : atLeastProbability < 60/100 ? 'pretty average.' : atLeastProbability < 80/100 ? 'somewhat bad' : atLeastProbability < 90/100 ? 'bad!' : atLeastProbability < 95/100 ? 'really bad!!' : 'terrible!!! Run into any Absol lately?') ? 'pretty average';
+                const quality = exactProbability < 40/100 ? (atLeastProbability < 5/100 ? 'amazing!!! Run into any Jirachi lately?' : atLeastProbability < 10/100 ? 'really good!!' : atLeastProbability < 20/100 ? 'good!' : atLeastProbability < 40/100 ? 'somewhat good.' : atLeastProbability < 60/100 ? 'pretty average.' : atLeastProbability < 80/100 ? 'somewhat bad' : atLeastProbability < 90/100 ? 'bad!' : atLeastProbability < 95/100 ? 'really bad!!' : 'terrible!!! Run into any Absol lately?') : 'pretty average';
                 resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
                 resultElement.innerText += `\nChance of pulling exactly ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
                 resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(moreThanProbability * 100).toFixed(3)}%`;
