@@ -75,6 +75,7 @@
         .result {
             margin-top: 10px;
             margin-left: 40px;
+            margin-right: 100px;
             font-size: 16px;
             font-weight: 300;
             text-align: right;
@@ -174,17 +175,22 @@
             }
 
             const numCards = parseInt(numCardsInput) || 0;
-            if (packsOpened > 10000 || numCards > 1000) {
+            if (numCards > packsOpened) {
+                resultElement.innerText = 'Those values seem suspiciously unlikely. Are you sure you entered them correctly?'
+            } else if (packsOpened > 10000 || numCards > 1000) {
                 resultElement.innerText = 'Those values are unreasonably large! Please enter smaller amounts.'
-            }
-            if (packsOpened > 0 && numCards > 0) {
-                const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rarityRate);
-                const plural = numCards > 1 ? 's' : '';
-                resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
-                resultElement.innerText += `\nChance of pulling exactly ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
-                resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${((1-exactProbability-lessThanProbability) * 100).toFixed(3)}%`;
-            } else {
+            } else if (packsOpened < 0 || numCards < 0) {
                 resultElement.innerText = 'Please enter values for both the number of packs and number of cards.';
+            } else {
+                const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rarityRate);
+                const moreThanProbability = 1 - exactProbability - lessThanProbability;
+                const plural = numCards > 1 ? 's' : '';
+                const item = cardType == 'rare' ? 'pack' : 'card';
+                const quality = moreThanProbability < 5/100 ? 'amazing!!! Run into any Jirachi lately?' : moreThanProbability < 10/100 ? 'really good!!' : moreThanProbability < 20/100 ? 'good!' : moreThanProbability < 40/100 ? 'somewhat good.' : moreThanProbability < 60/100 ? 'pretty average.' : moreThanProbability < 80/100 ? 'somewhat bad' : moreThanProbability < 90/100 ? 'bad!' : moreThanProbability < 95/100 ? 'really bad!!' : 'terrible!!! Run into any Absol lately?';
+                resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nChance of pulling exactly ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} ${item}${plural} in ${packsOpened} packs: ${(moreThanProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nYour ${cardType} ${item} luck is ${quality}`
             }
         }
 
