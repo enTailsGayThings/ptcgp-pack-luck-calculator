@@ -28,7 +28,11 @@
             margin-bottom: 20px;
         }
         .label {
-            font-weight: 800;
+            font-weight: 700;
+        }
+        .sublabel {
+            font-weight: 550;
+            margin-right: 10px;
         }
         .input-group {
             margin-top: 5px;
@@ -38,9 +42,9 @@
             justify-content: flex-start;
         }
         .input-group .prompt {
-            font-weight: 700;
+            font-weight: 550;
             margin-right: 10px;
-            min-width: 300px;
+            min-width: 280px;
         }
         .input-group input {
             padding: 8px;
@@ -51,7 +55,7 @@
         .button {
             padding: 10px;
             font-size: 16px;
-            font-weight: 800;
+            font-weight: 750;
             background-color: #84c8d9;
             color: white;
             border: none;
@@ -64,7 +68,7 @@
         .result {
             margin-top: 10px;
             font-size: 16px;
-            font-weight: 400;
+            font-weight: 300;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -82,7 +86,7 @@
         <div class="section">
             <label class="label">First, enter the number of packs you have opened</label>
             <div class="input-group">
-                <label class="prompt">Number of packs:</label>
+                <label class="sublabel">Number of packs:</label>
                 <input type="number" id="packsOpened" placeholder="0" min="0" />
             </div>
         </div>
