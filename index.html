@@ -74,6 +74,7 @@
         }
         .result {
             margin-top: 10px;
+            margin-left: 40px;
             font-size: 16px;
             font-weight: 300;
         }
@@ -94,14 +95,14 @@
             <label class="label">First, enter the number of packs you have opened</label>
             <div class="input-group">
                 <label class="sublabel">Number of packs:</label>
-                <input type="number" id="packsOpened" placeholder="0" min="0" />
+                <input type="number" id="packsOpened" placeholder="0" min="0" max="10000"/>
             </div>
         </div>
         <div class="section">
             <label class="label">Then, enter the number of cards you pulled and hit submit</label>
             <div class="input-group">
                 <label class="prompt">Number of 👑 cards pulled:</label>
-                <input type="number" id="crownCards" placeholder="0" min="0" />
+                <input type="number" id="crownCards" placeholder="0" min="0" max="1000"/>
                 <button class="button" onclick="calculateLuck('crown')">Submit</button>
             </div>
             <div id="crownResult" class="result"></div>
@@ -110,7 +111,7 @@
             <!--<label class="label">Three Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of ⭐⭐⭐ cards pulled:</label>
-                <input type="number" id="threeStarCards" placeholder="0" min="0" />
+                <input type="number" id="threeStarCards" placeholder="0" min="0" max="1000"/>
                 <button class="button" onclick="calculateLuck('threeStar')">Submit</button>
             </div>
             <div id="threeStarResult" class="result"></div>
@@ -119,7 +120,7 @@
             <!--<label class="label">Two Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of ⭐⭐ cards pulled:</label>
-                <input type="number" id="twoStarCards" placeholder="0" min="0" />
+                <input type="number" id="twoStarCards" placeholder="0" min="0" max="1000"/>
                 <button class="button" onclick="calculateLuck('twoStar')">Submit</button>
             </div>
             <div id="twoStarResult" class="result"></div>
@@ -128,7 +129,7 @@
             <!--<label class="label">One Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of ⭐ cards pulled:</label>
-                <input type="number" id="oneStarCards" placeholder="0" min="0" />
+                <input type="number" id="oneStarCards" placeholder="0" min="0" max="1000"/>
                 <button class="button" onclick="calculateLuck('oneStar')">Submit</button>
             </div>
             <div id="oneStarResult" class="result"></div>
@@ -137,7 +138,7 @@
             <!--<label class="label">One Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of rare ("god") packs:</label>
-                <input type="number" id="rarePacks" placeholder="0" min="0" />
+                <input type="number" id="rarePacks" placeholder="0" min="0" max="100"/>
                 <button class="button" onclick="calculateLuck('rare')">Submit</button>
             </div>
             <div id="rareResult" class="result"></div>
@@ -174,16 +175,26 @@
             const numCards = parseInt(numCardsInput) || 0;
 
             if (packsOpened > 0 && numCards > 0) {
-                // Calculate probability of getting exactly numCards successes
-                let probability = binomialProbability(packsOpened, numCards, rarityRate);
-                resultElement.innerText = `The chance of receiving exactly ${numCards} ${cardType} cards is: ${(probability * 100).toFixed(2)}%`;
+                const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rarityRate);
+                resultElement.innerText = `Chance of receiving fewer than ${numCards} ${cardType} cards in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `Chance of receiving exactly ${numCards} ${cardType} cards in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `Chance of receiving more than ${numCards} ${cardType} cards in ${packsOpened} packs: ${((1-exactProbability-lessThanProbability) * 100).toFixed(3)}%`;
             } else {
-                resultElement.innerText = 'Please enter valid numbers for both packs opened and number of cards.';
+                resultElement.innerText = 'Please enter valid values for both the number of packs and number of cards.';
             }
         }
 
+        function getProbabilities(n, k, p) {
+            const exactProbability = binomialProbability(n, k, p);
+            let lessThanProbability = 0;
+            for (let i = 0; i < k; i++) {
+                lessThanProbability += binomialProbability(n, i, p);
+            }
+            return { exactProbability, lessThanProbability };
+        }
+
         function binomialProbability(n, k, p) {
-            // Binomial probability formula: P(X = k) = C(n, k) * p^k * (1-p)^(n-k)
+            // P(X = k) = C(n, k) * p^k * (1-p)^(n-k)
             const combination = factorial(n) / (factorial(k) * factorial(n - k));
             return combination * Math.pow(p, k) * Math.pow(1 - p, n - k);
         }
