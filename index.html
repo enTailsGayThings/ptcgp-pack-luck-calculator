@@ -77,6 +77,7 @@
             margin-left: 40px;
             font-size: 16px;
             font-weight: 300;
+            text-align: right;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -173,15 +174,17 @@
             }
 
             const numCards = parseInt(numCardsInput) || 0;
-
+            if (packsOpened > 10000 || numCards > 1000) {
+                resultElement.innerText = 'Those values are unreasonably large! Please enter smaller amounts.'
+            }
             if (packsOpened > 0 && numCards > 0) {
                 const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rarityRate);
                 const plural = numCards > 1 ? 's' : '';
                 resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
-                resultElement.innerText += `\n    Chance of pulling exactly ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nChance of pulling exactly ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
                 resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${((1-exactProbability-lessThanProbability) * 100).toFixed(3)}%`;
             } else {
-                resultElement.innerText = 'Please enter valid values for both the number of packs and number of cards.';
+                resultElement.innerText = 'Please enter values for both the number of packs and number of cards.';
             }
         }
 
