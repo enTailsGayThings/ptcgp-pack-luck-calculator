@@ -35,10 +35,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            justify-content: flex-start;
         }
         .input-group .prompt {
             font-weight: 500;
             margin-right: 10px;
+            min-width: 180px;
         }
         .input-group input {
             padding: 8px;
@@ -78,14 +80,14 @@
     <div class="container">
         <h1>Card Rarity Luck Calculator</h1>
         <div class="section">
-            <label class="label">Number of packs opened:</label>
+            <!--<label class="label">Number of packs opened:</label>-->
             <div class="input-group">
-                <label class="prompt">Packs:</label>
+                <label class="prompt">Number of packs opened:</label>
                 <input type="number" id="packsOpened" placeholder="0" min="0" />
             </div>
         </div>
         <div class="section">
-            <label class="label">Crown Card Luck:</label>
+            <!--<label class="label">Crown Card Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of 👑 cards pulled:</label>
                 <input type="number" id="crownCards" placeholder="0" min="0" />
@@ -94,7 +96,7 @@
             <div id="crownResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label">Three Star Luck:</label>
+            <!--<label class="label">Three Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of ⭐⭐⭐ cards pulled:</label>
                 <input type="number" id="threeStarCards" placeholder="0" min="0" />
@@ -103,7 +105,7 @@
             <div id="threeStarResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label">Two Star Luck:</label>
+            <!--<label class="label">Two Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of ⭐⭐ cards pulled:</label>
                 <input type="number" id="twoStarCards" placeholder="0" min="0" />
@@ -112,13 +114,22 @@
             <div id="twoStarResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label">One Star Luck:</label>
+            <!--<label class="label">One Star Luck:</label>-->
             <div class="input-group">
                 <label class="prompt">Number of ⭐ cards pulled:</label>
                 <input type="number" id="oneStarCards" placeholder="0" min="0" />
                 <button class="button" onclick="calculateLuck('oneStar')">Submit</button>
             </div>
             <div id="oneStarResult" class="result"></div>
+        </div>
+        <div class="section">
+            <!--<label class="label">One Star Luck:</label>-->
+            <div class="input-group">
+                <label class="prompt">Number of rare (AKA "god") packs:</label>
+                <input type="number" id="rarePacks" placeholder="0" min="0" />
+                <button class="button" onclick="calculateLuck('rare')">Submit</button>
+            </div>
+            <div id="rareResult" class="result"></div>
         </div>
     </div>
 
@@ -143,6 +154,10 @@
                 rarityRate = 0.04;
                 numCardsInput = document.getElementById('oneStarCards').value;
                 resultElement = document.getElementById('oneStarResult');
+            } else if (cardType === 'rare') {
+                rarityRate = 1/2000;
+                numCardsInput = document.getElementById('rarePacks').value;
+                resultElement = document.getElementById('rareResult');
             }
 
             const numCards = parseInt(numCardsInput) || 0;
