@@ -153,19 +153,19 @@
             let rarityRate, numCardsInput, resultElement;
             
             if (cardType === 'crown') {
-                rarityRate = 0.01;
+                rarityRate = 1999/2000*(0.04/100+0.160/100) + 1/2000*(1-(1-(3.846/100+5.555/100+5.263/100)/3)**5);
                 numCardsInput = document.getElementById('crownCards').value;
                 resultElement = document.getElementById('crownResult');
             } else if (cardType === 'three star') {
-                rarityRate = 0.02;
+                rarityRate = 1999/2000*(0.888/100+0.222/100) + 1/2000*(1-(1-(3.846/100+5.555/100+5.263/100)/3)**5);
                 numCardsInput = document.getElementById('threeStarCards').value;
                 resultElement = document.getElementById('threeStarResult');
             } else if (cardType === 'two star') {
-                rarityRate = 0.03;
+                rarityRate = 1999/2000*(0.5/100+2/100) + 1/2000*(1-(1-(47.368/100+55.555/100+46.153/100)/3)**5);
                 numCardsInput = document.getElementById('twoStarCards').value;
                 resultElement = document.getElementById('twoStarResult');
             } else if (cardType === 'one star') {
-                rarityRate = 0.04;
+                rarityRate = 1999/2000*(2.572/100+10.288/100) + 1/2000*(1-(1-(42.105/100+33.333/100+46.153/100)/3)**5);
                 numCardsInput = document.getElementById('oneStarCards').value;
                 resultElement = document.getElementById('oneStarResult');
             } else if (cardType === 'rare') {
