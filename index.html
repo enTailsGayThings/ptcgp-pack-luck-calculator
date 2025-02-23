@@ -28,7 +28,7 @@
             margin-bottom: 20px;
         }
         .label {
-            font-weight: bold;
+            font-weight: 750;
         }
         .input-group {
             margin-top: 5px;
@@ -49,7 +49,7 @@
         .button {
             padding: 10px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 1000;
             background-color: #84c8d9;
             color: white;
             border: none;
@@ -62,7 +62,7 @@
         .result {
             margin-top: 10px;
             font-size: 16px;
-            font-weight: lighter;
+            font-weight: 400;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -78,7 +78,7 @@
     <div class="container">
         <h1>Card Rarity Luck Calculator</h1>
         <div class="section">
-            <label class="label">Number of packs you have opened:</label>
+            <label class="label">Number of packs opened:</label>
             <div class="input-group">
                 <label class="prompt">Packs:</label>
                 <input type="number" id="packsOpened" placeholder="0" min="0" />
@@ -87,7 +87,7 @@
         <div class="section">
             <label class="label">Crown Card Luck:</label>
             <div class="input-group">
-                <label class="prompt">Number of crown cards pulled:</label>
+                <label class="prompt">Number of 👑 cards pulled:</label>
                 <input type="number" id="crownCards" placeholder="0" min="0" />
                 <button class="button" onclick="calculateLuck('crown')">Submit</button>
             </div>
@@ -96,7 +96,7 @@
         <div class="section">
             <label class="label">Three Star Luck:</label>
             <div class="input-group">
-                <label class="prompt">Number of three star cards pulled:</label>
+                <label class="prompt">Number of ⭐⭐⭐ cards pulled:</label>
                 <input type="number" id="threeStarCards" placeholder="0" min="0" />
                 <button class="button" onclick="calculateLuck('threeStar')">Submit</button>
             </div>
@@ -105,7 +105,7 @@
         <div class="section">
             <label class="label">Two Star Luck:</label>
             <div class="input-group">
-                <label class="prompt">Number of two star cards pulled:</label>
+                <label class="prompt">Number of ⭐⭐ cards pulled:</label>
                 <input type="number" id="twoStarCards" placeholder="0" min="0" />
                 <button class="button" onclick="calculateLuck('twoStar')">Submit</button>
             </div>
@@ -114,7 +114,7 @@
         <div class="section">
             <label class="label">One Star Luck:</label>
             <div class="input-group">
-                <label class="prompt">Number of one star cards pulled:</label>
+                <label class="prompt">Number of ⭐ cards pulled:</label>
                 <input type="number" id="oneStarCards" placeholder="0" min="0" />
                 <button class="button" onclick="calculateLuck('oneStar')">Submit</button>
             </div>
