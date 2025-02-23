@@ -99,7 +99,7 @@
             </div>
         </div>
         <div class="section">
-            <label class="label">Then, enter the number of cards you pulled and hit submit</label>
+            <label class="label">Then, enter the number of cards you have pulled and hit submit</label>
             <div class="input-group">
                 <label class="prompt">Number of 👑 cards pulled:</label>
                 <input type="number" id="crownCards" placeholder="0" min="0" max="1000"/>
@@ -176,9 +176,10 @@
 
             if (packsOpened > 0 && numCards > 0) {
                 const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rarityRate);
-                resultElement.innerText = `Chance of receiving fewer than ${numCards} ${cardType} cards in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
-                resultElement.innerText += `\nChance of receiving exactly ${numCards} ${cardType} cards in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
-                resultElement.innerText += `\nChance of receiving more than ${numCards} ${cardType} cards in ${packsOpened} packs: ${((1-exactProbability-lessThanProbability) * 100).toFixed(3)}%`;
+                const plural = numCards > 1 ? 's' : '';
+                resultElement.innerText = `Chance of pulling fewer than ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(lessThanProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\n    Chance of pulling exactly ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${(exactProbability * 100).toFixed(3)}%`;
+                resultElement.innerText += `\nChance of pulling more than ${numCards} ${cardType} card${plural} in ${packsOpened} packs: ${((1-exactProbability-lessThanProbability) * 100).toFixed(3)}%`;
             } else {
                 resultElement.innerText = 'Please enter valid values for both the number of packs and number of cards.';
             }
