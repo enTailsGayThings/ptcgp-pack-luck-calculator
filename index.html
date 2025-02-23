@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Card Rarity Luck Calculator</title>
+    <title>Pokémon TCG Pocket Luck Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -147,8 +147,20 @@
             </div>
             <div id="rareResult" class="result"></div>
         </div>
+        <div class="section">
+            <h1 style="text-align: center;">How to Find Your Stats</h1>
+            <div class="image-gallery" style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <label class="label">Check your packs trophy to find your number of opened packs.</label>
+                <img src="images/packs.png" alt="packs image" style="width: 150px; height: auto;"/>
+                <label class="label">Use the search function to find your number of cards.</label>
+                <img src="images/search1.png" alt="search1 image" style="width: 150px; height: auto;"/>
+                <label class="label">Use the filter to select a given card rarity.</label>
+                <img src="images/search2.png" alt="search2 image" style="width: 150px; height: auto;"/>
+                <label class="label">Check the resulting count to find your number of cards of that rarity.</label>
+                <img src="images/search3.png" alt="search3 image" style="width: 150px; height: auto;"/>
+            </div>
+        </div>
     </div>
-
     <script>
         function calculateLuck(cardType) {
             const packsOpened = parseInt(document.getElementById('packsOpened').value) || 0;
