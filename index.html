@@ -150,14 +150,14 @@
         <div class="section">
             <h1 style="text-align: center;">How to Find Your Stats</h1>
             <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px;">
-                <img src="images/packs.png" alt="packs image" style="width: 400px; height: auto;"/>
+                <img src="images/packs.png" alt="packs image" style="width: 320px; height: auto;"/>
                 <label class="sublabel">Check your packs trophy to find your number of opened packs.</label>
-                <img src="images/search1.png" alt="search1 image" style="width: 400px; height: auto;"/>
+                <img src="images/search1.png" alt="search1 image" style="width: 320px; height: auto;"/>
                 <label class="sublabel">Use the search function to find your number of cards.</label>
-                <img src="images/search2.png" alt="search2 image" style="width: 400px; height: auto;"/>
+                <img src="images/search2.png" alt="search2 image" style="width: 320px; height: auto;"/>
                 <label class="sublabel">Use the filter to select a given card rarity.</label>
-                <img src="images/search3.png" alt="search3 image" style="width: 400px; height: auto;"/>
-                <label class="sublabel">Check the resulting count to find your number of cards of that rarity.</label>
+                <img src="images/search3.png" alt="search3 image" style="width: 320px; height: auto;"/>
+                <label class="sublabel">Check the resulting count to find your number of cards of that rarity.<br>Try to exclude cards you received from wonder picks or promos.</label>
             </div>
         </div>
     </div>
@@ -165,25 +165,29 @@
         function calculateLuck(cardType) {
             const packsOpened = parseInt(document.getElementById('packsOpened').value) || 0;
             let rate, numCardsInput, resultElement;
+            const rarePackRate = 1/2000;
+            const normalPackRate = 1 - rarePackRate;
+            const cardsPerPack = 5;
+            const numSeries = 3;
             
             if (cardType === 'crown') {
-                rate = 1999/2000*(0.04/100+0.160/100) + 1/2000*(1-(1-(3.846/100+5.555/100+5.263/100)/3)**5);
+                rate = normalPackRate*(0.04/100+0.160/100) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('crownCards').value;
                 resultElement = document.getElementById('crownResult');
             } else if (cardType === 'three star') {
-                rate = 1999/2000*(0.888/100+0.222/100) + 1/2000*(1-(1-(3.846/100+5.555/100+5.263/100)/3)**5);
+                rate = normalPackRate*(0.888/100+0.222/100) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('threeStarCards').value;
                 resultElement = document.getElementById('threeStarResult');
             } else if (cardType === 'two star') {
-                rate = 1999/2000*(0.5/100+2/100) + 1/2000*(1-(1-(47.368/100+55.555/100+46.153/100)/3)**5);
+                rate = normalPackRate*(0.5/100+2/100) + rarePackRate*(1-(1-(47.368/100+55.555/100+46.153/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('twoStarCards').value;
                 resultElement = document.getElementById('twoStarResult');
             } else if (cardType === 'one star') {
-                rate = 1999/2000*(2.572/100+10.288/100) + 1/2000*(1-(1-(42.105/100+33.333/100+46.153/100)/3)**5);
+                rate = normalPackRate*(2.572/100+10.288/100) + rarePackRate*(1-(1-(42.105/100+33.333/100+46.153/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('oneStarCards').value;
                 resultElement = document.getElementById('oneStarResult');
             } else if (cardType === 'rare') {
-                rate = 1/2000;
+                rate = rarePackRate;
                 numCardsInput = document.getElementById('rarePacks').value;
                 resultElement = document.getElementById('rareResult');
             }
