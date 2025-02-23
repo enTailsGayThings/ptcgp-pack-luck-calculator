@@ -204,10 +204,21 @@
             return { exactProbability, lessThanProbability };
         }
 
+        function combination(n, k) {
+            if (k > n) return 0;
+            if (k == 0 || k == n) return 1;
+            if (k > n - k) k = n - k;
+            let result = 1;
+            for (let i = 1; i <= k; i++) {
+                result *= (n - (k - i)) / i;
+            }
+            return result;
+        }
+
         function binomialProbability(n, k, p) {
             // P(X = k) = C(n, k) * p^k * (1-p)^(n-k)
-            const combination = factorial(n) / (factorial(k) * factorial(n - k));
-            return combination * Math.pow(p, k) * Math.pow(1 - p, n - k);
+            const nChooseK = combination(n, k)
+            return nChooseK * Math.pow(p, k) * Math.pow(1 - p, n - k);
         }
 
         function factorial(num) {
