@@ -169,19 +169,19 @@
             const numSeries = 3;
             
             if (cardType === 'crown') {
-                rate = normalPackRate*(0.04/100+0.160/100) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
+                rate = normalPackRate*(1-(1-0.04/100)*(1-0.160/100)) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('crownCards').value;
                 resultElement = document.getElementById('crownResult');
             } else if (cardType === 'three star') {
-                rate = normalPackRate*(0.888/100+0.222/100) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
+                rate = normalPackRate*(1-(1-0.888/100)*(1-0.222/100)) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('threeStarCards').value;
                 resultElement = document.getElementById('threeStarResult');
             } else if (cardType === 'two star') {
-                rate = normalPackRate*(0.5/100+2/100) + rarePackRate*(1-(1-(47.368/100+55.555/100+46.153/100)/numSeries)**cardsPerPack);
+                rate = normalPackRate*(1-(1-0.5/100)*(1-2/100)) + rarePackRate*(1-(1-(47.368/100+55.555/100+46.153/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('twoStarCards').value;
                 resultElement = document.getElementById('twoStarResult');
             } else if (cardType === 'one star') {
-                rate = normalPackRate*(2.572/100+10.288/100) + rarePackRate*(1-(1-(42.105/100+33.333/100+46.153/100)/numSeries)**cardsPerPack);
+                rate = normalPackRate*(1-(1-2.572/100)*(1-10.288/100)) + rarePackRate*(1-(1-(42.105/100+33.333/100+46.153/100)/numSeries)**cardsPerPack);
                 numCardsInput = document.getElementById('oneStarCards').value;
                 resultElement = document.getElementById('oneStarResult');
             } else if (cardType === 'rare') {
@@ -189,6 +189,8 @@
                 numCardsInput = document.getElementById('rarePacks').value;
                 resultElement = document.getElementById('rareResult');
             }
+
+            // These are actually off a bit because I have forgotten to factor in the chance that a single pack gives the rare card on both its 4th and 5th...
 
             const numCards = parseInt(numCardsInput) || 0;
             if (numCards > packsOpened) {
