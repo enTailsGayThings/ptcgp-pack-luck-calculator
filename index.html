@@ -107,40 +107,35 @@
             <label class="label"><br>Enter the number of cards you have pulled<br><br></label>
             <div class="input-group">
                 <label class="prompt">Number of 👑 cards:</label>
-                <input type="number" id="crownCards" placeholder="Enter value..." min="0" max="1000"/>
-                <!--<button class="button" onclick="calculateAllLuck()">Submit</button>-->
+                <input type="number" id="crCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
-            <div id="crownResult" class="result"></div>
+            <div id="crResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
                 <label class="prompt">Number of ⭐⭐⭐ cards:</label>
-                <input type="number" id="threeStarCards" placeholder="Enter value..." min="0" max="1000"/>
-                <!--<button class="button" onclick="calculateAllLuck()">Submit</button>-->
+                <input type="number" id="3sCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
-            <div id="threeStarResult" class="result"></div>
+            <div id="3sResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
                 <label class="prompt">Number of ⭐⭐ cards:</label>
-                <input type="number" id="twoStarCards" placeholder="Enter value..." min="0" max="1000"/>
-                <!--<button class="button" onclick="calculateAllLuck()">Submit</button>-->
+                <input type="number" id="2sCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
-            <div id="twoStarResult" class="result"></div>
+            <div id="2sResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
                 <label class="prompt">Number of ⭐ cards:</label>
-                <input type="number" id="oneStarCards" placeholder="Enter value..." min="0" max="1000"/>
-                <!--<button class="button" onclick="calculateAllLuck()">Submit</button>-->
+                <input type="number" id="1sCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
-            <div id="oneStarResult" class="result"></div>
+            <div id="1sResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
                 <label class="prompt">Rare ("god") packs:</label>
-                <input type="number" id="rarePacks" placeholder="Enter value..." min="0" max="100"/>
-                <!--<button class="button" onclick="calculateAllLuck()">Submit</button>-->
+                <input type="number" id="rareCards" placeholder="Enter value..." min="0" max="100"/>
             </div>
             <div id="rareResult" class="result"></div>
         </div>
@@ -156,7 +151,7 @@
         <div class="section">
             <h1 style="text-align: center;"><br><br>How to Find Your Stats</h1>
             <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px;">
-                <img src="images/packs.png" alt="packs image" style="width: 320px; height: auto;"/>
+                <img src="images/packs.png"   alt="packs image"   style="width: 320px; height: auto;"/>
                 <label class="sublabel">Check your packs trophy to find your number of opened packs.</label>
                 <img src="images/search1.png" alt="search1 image" style="width: 320px; height: auto;"/>
                 <label class="sublabel">Use the search function to find your number of cards.</label>
@@ -173,76 +168,115 @@
             const packsOpened = parseInt(packsEntry) || 0;
             if (packsOpened <= 0) {
                 resultElement = document.getElementById('errorHandling');
-                resultElement.innerHTML = 'Please enter a valid number of opened packs.'
+                resultElement.innerHTML = 'Please enter a valid number of opened packs.';
                 return;
             }
             if (packsOpened > 10000) {
                 resultElement = document.getElementById('errorHandling');
-                resultElement.innerHTML = 'Number of packs is too large. Please limit query to 10,000 packs.'
+                resultElement.innerHTML = 'Number of packs is too large. Please limit query to 10,000 packs.';
                 return;
             }
-            calculateLuck(packsOpened, 'crown')
-            calculateLuck(packsOpened, 'three star')
-            calculateLuck(packsOpened, 'two star')
-            calculateLuck(packsOpened, 'one star')
-            calculateLuck(packsOpened, 'rare')
+            calculateLuck(packsOpened, 'crown');
+            calculateLuck(packsOpened, 'three star');
+            calculateLuck(packsOpened, 'two star');
+            calculateLuck(packsOpened, 'one star');
+            calculateLuck(packsOpened, 'rare');
         }
 
         function calculateLuck(packsOpened, cardType) {
-            let rate, numCardsInput, resultElement;
+            let numCardsInput, resultElement;
             const rarePackRate = 1/2000;
             const normalPackRate = 1 - rarePackRate;
             const cardsPerPack = 5;
             const numSeries = 3;
-            
-            if (cardType === 'crown') {
-                rate = normalPackRate*(1-(1-0.04/100)*(1-0.160/100)) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
-                numCardsInput = document.getElementById('crownCards').value;
-                resultElement = document.getElementById('crownResult');
-            } else if (cardType === 'three star') {
-                rate = normalPackRate*(1-(1-0.888/100)*(1-0.222/100)) + rarePackRate*(1-(1-(3.846/100+5.555/100+5.263/100)/numSeries)**cardsPerPack);
-                numCardsInput = document.getElementById('threeStarCards').value;
-                resultElement = document.getElementById('threeStarResult');
-            } else if (cardType === 'two star') {
-                rate = normalPackRate*(1-(1-0.5/100)*(1-2/100)) + rarePackRate*(1-(1-(47.368/100+55.555/100+46.153/100)/numSeries)**cardsPerPack);
-                numCardsInput = document.getElementById('twoStarCards').value;
-                resultElement = document.getElementById('twoStarResult');
-            } else if (cardType === 'one star') {
-                rate = normalPackRate*(1-(1-2.572/100)*(1-10.288/100)) + rarePackRate*(1-(1-(42.105/100+33.333/100+46.153/100)/numSeries)**cardsPerPack);
-                numCardsInput = document.getElementById('oneStarCards').value;
-                resultElement = document.getElementById('oneStarResult');
-            } else if (cardType === 'rare') {
-                rate = rarePackRate;
-                numCardsInput = document.getElementById('rarePacks').value;
-                resultElement = document.getElementById('rareResult');
-            }
+            const typeKeys = {'crown':'cr', 'three star':'3s', 'two star':'2s', 'one star':'1s', 'rare':'rare'};
+            const rarity = typeKeys[cardType];
+
+            const rates = {
+                'norm' : {'4th' : {'cr':0.040/100, '3s':0.888/100, '2s': 0.500/100, '1s': 2.572/100},
+                          '5th' : {'cr':0.160/100, '3s':0.222/100, '2s': 2.000/100, '1s':10.288/100}},
+                'rare' : {'a1'  : {'cr':3.846/100, '3s':3.846/100, '2s':47.368/100, '1s':42.105/100},
+                          'a1a' : {'cr':5.555/100, '3s':5.555/100, '2s':55.555/100, '1s':33.333/100},
+                          'a2'  : {'cr':5.263/100, '3s':5.263/100, '2s':46.153/100, '1s':46.153/100}}
+            };
+
+            // Note: this makes a simplifying assumption that the user has opened
+            // equally many card packs from each of the series. While that isn't
+            // always fair, the resulting error is likely much less than the error
+            // introduced by the many other existing issues and/or assumptions.
+
+            const rate = ((cardType == 'rare') ? rarePackRate :
+                normalPackRate * (1 - (1 -  rates['norm']['4th'][rarity]) * 
+                                      (1 -  rates['norm']['5th'][rarity])) + 
+                  rarePackRate * (1 - (1 - (rates['rare'][ 'a1'][rarity] + 
+                                            rates['rare']['a1a'][rarity] +
+                                            rates['rare'][ 'a2'][rarity]) / numSeries) ** cardsPerPack));
+
+            numCardsInput = document.getElementById(`${rarity}Cards`).value;
+            resultElement = document.getElementById(`${rarity}Result`);
 
             const numCards = parseInt(numCardsInput);
             if (isNaN(numCards)) {
                 return;
             }
 
-            // These are actually off a bit because I have forgotten to factor in the chance that a single pack gives the rare card on both its 4th and 5th...
+            // These are actually off a bit because I'm counting the scenario where a single pack gives two rare cards
+            // (that is, when both the 4th card and the 5th card end up being the same type of rare card) as only being
+            // worth a single card. That's because it is much easier to calculate the expected number of successes of
+            // a single event than to iterate over every possible way that the number of successes can be reached via
+            // combinations of events that count as either 0, 1, or 2 successes. Rare packs make the issue even worse.
+            // This error is greatest for one-star rarity cards, where the chance of receiving a rare card on both the
+            // 4th and 5th card of a pack is 0.02572*0.10288=0.0026460736 or 1 in 377.92. Since this math counts that
+            // scenario as being worth 1 one-star card instead of 2, the expectations end up being off by an average
+            // of 1 one-star card per 377.92 packs. While I could make an effort to reduce this inaccuracy, I reckon
+            // that error is less than the error of most users when estimating how many of their one-star cards were
+            // received via promos or wonder picks and/or how many of their one-star cards were converted into items.
+
             if (numCards > packsOpened*5) {
-                resultElement.innerHTML = 'Those values seem suspiciously unlikely. Are you sure you entered them correctly?'
+                resultElement.innerHTML = 'Those values seem suspiciously unlikely. Are you sure you entered them correctly?';
             } else if (numCards > 1000) {
-                resultElement.innerHTML = 'That value is unreasonably large! How do you have over 1,000 rare cards?'
+                resultElement.innerHTML = 'That value is unreasonably large! How do you have over 1,000 rare cards?';
             } else if (numCards < 0) {
                 resultElement.innerHTML = 'Please enter a valid number of cards.';
             } else {
                 const { exactProbability, lessThanProbability } = getProbabilities(packsOpened, numCards, rate);
                 const moreThanProbability = 1 - exactProbability - lessThanProbability;
-                const atLeastProbability = 1 - lessThanProbability;
-                const cardPlural = numCards > 1 ? 's' : '';
+                const atLeastProbability  = 1 - lessThanProbability;
+
+                const cardPlural =    numCards > 1 ? 's' : '';
                 const packPlural = packsOpened > 1 ? 's' : '';
                 const item = cardType == 'rare' ? 'pack' : 'card';
-                const quality = exactProbability < 36/100 ? (atLeastProbability < 5/100 ? '<span class="bold-text"><em>amazing</span></em>!!!<br>Run into any Jirachi lately?' : atLeastProbability < 10/100 ? '<span class="bold-text"><em>really good</span></em>!!' : atLeastProbability < 20/100 ? '<span class="bold-text"><em>good</span></em>!' : atLeastProbability < 36/100 ? '<span class="bold-text"><em>somewhat good</span></em>.' : (atLeastProbability < 63/100) || (moreThanProbability < 36/100) ? '<span class="bold-text"><em>pretty average</span></em>.' : moreThanProbability < 80/100 ? '<span class="bold-text"><em>somewhat bad</span></em>' : moreThanProbability < 90/100 ? '<span class="bold-text"><em>bad</span></em>!' : moreThanProbability < 95/100 ? '<span class="bold-text"><em>really bad</span></em>!!' : '<span class="bold-text"><em>terrible</span></em>!!!<br>Run into any Absol lately?') : '<span class="bold-text"><em>pretty average</span></em>';
-                resultElement.innerHTML  = `Chance of fewer than ${numCards} ${cardType} ${item}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(lessThanProbability) * 100).toFixed(2)}%</span><br>`;
-                //resultElement.innerHTML += `Chance of exactly ${numCards} ${cardType} ${item}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(exactProbability) * 100).toFixed(2)}%</span><br>`;
-                resultElement.innerHTML += `Chance of more than ${numCards} ${cardType} ${item}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(moreThanProbability) * 100).toFixed(2)}%</span><br><br>`;
-                resultElement.innerHTML += `Expected number of packs for ${numCards} ${cardType} ${item}${cardPlural}: <span class="bold-text">${(numCards/rate).toFixed(1)}</span><br>`
-                resultElement.innerHTML += `Expected number of ${cardType} ${item}s in ${packsOpened} pack${packPlural}: <span class="bold-text">${(packsOpened*rate).toFixed(1)}</span><br><br>`
-                resultElement.innerHTML += `Your ${cardType} ${item} luck is ${quality}<br>`
+
+                const goodText = ['<span class="bold-text"><em>somewhat good</span></em>.',
+                                  '<span class="bold-text"><em>good</span></em>!',
+                                  '<span class="bold-text"><em>really good</span></em>!!',
+                                  '<span class="bold-text"><em>amazing</span></em>!!!<br>Run into any Jirachi lately?'];
+                const badText  = ['<span class="bold-text"><em>somewhat bad</span></em>.',
+                                  '<span class="bold-text"><em>bad</span></em>!',
+                                  '<span class="bold-text"><em>really bad</span></em>!!',
+                                  '<span class="bold-text"><em>terrible</span></em>!!!<br>Run into any Absol lately?'];
+                const avgText =   '<span class="bold-text"><em>pretty average</span></em>.';
+
+                const thresh = [1/Math.E, 20/100, 10/100, 5/100];
+                const flavorText = (exactProbability <   thresh[0] ? 
+                                 (atLeastProbability <   thresh[3] ? goodText[3] : 
+                                  atLeastProbability <   thresh[2] ? goodText[2] :
+                                  atLeastProbability <   thresh[1] ? goodText[1] :
+                                  atLeastProbability <   thresh[0] ? goodText[0] :
+                                 (atLeastProbability < 1-thresh[0]) || (moreThanProbability < thresh[0]) ? avgText :
+                                 moreThanProbability < 1-thresh[1] ?  badText[0] :
+                                 moreThanProbability < 1-thresh[2] ?  badText[1] :
+                                 moreThanProbability < 1-thresh[3] ?  badText[2] :
+                                                                      badText[3]):
+                                                                      avgText);
+
+                resultElement.innerHTML  = `Chance of fewer than ${numCards} ${cardType}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(lessThanProbability) * 100).toFixed(2)}%</span><br>`;
+                resultElement.innerHTML += `Chance of more than ${numCards} ${cardType}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(moreThanProbability) * 100).toFixed(2)}%</span><br><br>`;
+                if (numCards > 0) {
+                    resultElement.innerHTML += `Expected number of packs for ${numCards} ${cardType}${cardPlural}: <span class="bold-text">${(numCards/rate).toFixed(1)}</span><br>`;
+                }
+                resultElement.innerHTML += `Expected number of ${cardType} ${item}s in ${packsOpened} pack${packPlural}: <span class="bold-text">${(packsOpened*rate).toFixed(1)}</span><br><br>`;
+                resultElement.innerHTML += `Your ${cardType} ${item} luck is ${flavorText}<br>`;
             }
         }
 
@@ -268,7 +302,7 @@
 
         function binomialProbability(n, k, p) {
             // P(X = k) = C(n, k) * p^k * (1-p)^(n-k)
-            const nChooseK = combination(n, k)
+            const nChooseK = combination(n, k);
             return nChooseK * Math.pow(p, k) * Math.pow(1 - p, n - k);
         }
 
