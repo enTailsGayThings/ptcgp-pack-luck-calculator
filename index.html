@@ -135,10 +135,10 @@
         </div>
         <div class="section">
             <div class="input-group">
-                <label class="prompt">Number of ♦♦♦♦ cards:</label>
-                <input type="number" id="exCards" placeholder="Enter value..." min="0" max="1000"/>
+                <label class="prompt">Number of ♢♢♢♢ cards:</label>
+                <input type="number" id="4dCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
-            <div id="exResult" class="result"></div>
+            <div id="4dResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
@@ -188,7 +188,7 @@
             calculateLuck(packsOpened, 'three star');
             calculateLuck(packsOpened, 'two star');
             calculateLuck(packsOpened, 'one star');
-            calculateLuck(packsOpened, 'EX')
+            calculateLuck(packsOpened, 'four diamond')
             calculateLuck(packsOpened, 'rare');
         }
 
@@ -198,15 +198,15 @@
             const normalPackRate = 1 - rarePackRate;
             const cardsPerPack = 5;
             const numSeries = 3;
-            const typeKeys = {'crown':'cr', 'three star':'3s', 'two star':'2s', 'one star':'1s', 'rare':'rare', 'EX':'ex'};
+            const typeKeys = {'crown':'cr', 'three star':'3s', 'two star':'2s', 'one star':'1s', 'rare':'rare', 'four diamond':'4d'};
             const rarity = typeKeys[cardType];
 
             const rates = {
-                'norm' : {'4th' : {'cr':0.040/100, '3s':0.888/100, '2s': 0.500/100, '1s': 2.572/100, 'ex': 1.666/100},
-                          '5th' : {'cr':0.160/100, '3s':0.222/100, '2s': 2.000/100, '1s':10.288/100, 'ex': 6.664/100}},
-                'rare' : {'a1'  : {'cr':3.846/100, '3s':3.846/100, '2s':47.368/100, '1s':42.105/100, 'ex': 0},
-                          'a1a' : {'cr':5.555/100, '3s':5.555/100, '2s':55.555/100, '1s':33.333/100, 'ex': 0},
-                          'a2'  : {'cr':5.263/100, '3s':5.263/100, '2s':46.153/100, '1s':46.153/100, 'ex': 0}}
+                'norm' : {'4th' : {'cr':0.040/100, '3s':0.888/100, '2s': 0.500/100, '1s': 2.572/100, '4d': 1.666/100},
+                          '5th' : {'cr':0.160/100, '3s':0.222/100, '2s': 2.000/100, '1s':10.288/100, '4d': 6.664/100}},
+                'rare' : {'a1'  : {'cr':3.846/100, '3s':3.846/100, '2s':47.368/100, '1s':42.105/100, '4d': 0.000/100},
+                          'a1a' : {'cr':5.555/100, '3s':5.555/100, '2s':55.555/100, '1s':33.333/100, '4d': 0.000/100},
+                          'a2'  : {'cr':5.263/100, '3s':5.263/100, '2s':46.153/100, '1s':46.153/100, '4d': 0.000/100}}
             };
 
             // Note: this makes a simplifying assumption that the user has opened
