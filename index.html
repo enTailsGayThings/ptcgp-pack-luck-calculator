@@ -221,6 +221,12 @@
                                             rates['rare']['a1a'][rarity] +
                                             rates['rare'][ 'a2'][rarity]) / numSeries) ** cardsPerPack));
 
+            const expCardsPerPack = ((cardType == 'rare') ? rate :
+            	normalPackRate * (rates['norm']['4th'][rarity] + rates['norm']['5th'][rarity]) +
+            	  rarePackRate *((rates['rare'][ 'a1'][rarity] + 
+            	  	              rates['rare']['a1a'][rarity] +
+                                  rates['rare'][ 'a2'][rarity]) / numSeries) * cardsPerPack);
+
             numCardsInput = document.getElementById(`${rarity}Cards`).value;
             resultElement = document.getElementById(`${rarity}Result`);
 
@@ -282,9 +288,9 @@
                 resultElement.innerHTML  = `Chance of fewer than ${numCards} ${cardType}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(lessThanProbability) * 100).toFixed(2)}%</span><br>`;
                 resultElement.innerHTML += `Chance of more than ${numCards} ${cardType}${cardPlural} in ${packsOpened} pack${packPlural}: <span class="prob-text">${(Math.abs(moreThanProbability) * 100).toFixed(2)}%</span><br><br>`;
                 if (numCards > 0) {
-                    resultElement.innerHTML += `Expected number of packs for ${numCards} ${cardType}${cardPlural}: <span class="bold-text">${(numCards/rate).toFixed(1)}</span><br>`;
+                    resultElement.innerHTML += `Expected number of packs for ${numCards} ${cardType}${cardPlural}: <span class="bold-text">${(numCards/expCardsPerPack).toFixed(1)}</span><br>`;
                 }
-                resultElement.innerHTML += `Expected number of ${cardType} ${item}s in ${packsOpened} pack${packPlural}: <span class="bold-text">${(packsOpened*rate).toFixed(1)}</span><br><br>`;
+                resultElement.innerHTML += `Expected number of ${cardType} ${item}s in ${packsOpened} pack${packPlural}: <span class="bold-text">${(packsOpened*expCardsPerPack).toFixed(1)}</span><br><br>`;
                 resultElement.innerHTML += `Your ${cardType} ${item} luck is ${flavorText}<br>`;
             }
         }
