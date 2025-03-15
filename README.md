@@ -5,6 +5,6 @@ This fan-made calculator uses some simple HTML/CSS/JS to determine how lucky PTC
 Feel free to submit a PR if you'd like to contribute.
 
 Open issues:
- - Users have to exclude cards they received from wonder packs
+ - Users have to exclude cards they received from wonder picks
  - Users have to manually add cards they converted to items back to their count
  - The binomial probability calculations are a bit off since a single pack can yield multiple rare cards
