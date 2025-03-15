@@ -1,4 +1,4 @@
-# Pokemon TCG Pocket Luck Calculator
+# Pokemon TCG Pocket Pack Luck Calculator
 
 This fan-made calculator uses some simple HTML/CSS/JS to determine how lucky PTCGP players have been with their packs and cards.
 
