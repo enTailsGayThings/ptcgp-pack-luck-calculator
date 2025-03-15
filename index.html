@@ -197,16 +197,23 @@
             const rarePackRate = 1/2000;
             const normalPackRate = 1 - rarePackRate;
             const cardsPerPack = 5;
-            const numSeries = 3;
+            const setThreeMult = 2.5;
+            const setTwoMult = 1.75;
+            const setOneMult = 1;
+            const numSetThree = 1;
+            const numSetTwo = 1;
+            const numSetOne = 2;
+            const setAverageDivisor = (setThreeMult * numSetThree) + (setTwoMult * numSetTwo) + (setOneMult * numSetOne)
             const typeKeys = {'crown':'cr', 'three star':'3s', 'two star':'2s', 'one star':'1s', 'rare':'rare', 'four diamond':'4d'};
             const rarity = typeKeys[cardType];
 
             const rates = {
-                'norm' : {'4th' : {'cr':0.040/100, '3s':0.888/100, '2s': 0.500/100, '1s': 2.572/100, '4d': 1.666/100},
-                          '5th' : {'cr':0.160/100, '3s':0.222/100, '2s': 2.000/100, '1s':10.288/100, '4d': 6.664/100}},
-                'rare' : {'a1'  : {'cr':3.846/100, '3s':3.846/100, '2s':47.368/100, '1s':42.105/100, '4d': 0.000/100},
+                'norm' : {'4th' : {'cr':0.040/100, '3s':0.222/100, '2s': 0.500/100, '1s': 2.572/100, '4d': 1.666/100},
+                          '5th' : {'cr':0.160/100, '3s':0.888/100, '2s': 2.000/100, '1s':10.288/100, '4d': 6.664/100}},
+                'rare' : {'a1'  : {'cr':5.088/100, '3s':5.088/100, '2s':49.122/100, '1s':40.702/100, '4d': 0.000/100},
                           'a1a' : {'cr':5.555/100, '3s':5.555/100, '2s':55.555/100, '1s':33.333/100, '4d': 0.000/100},
-                          'a2'  : {'cr':5.263/100, '3s':5.263/100, '2s':46.153/100, '1s':46.153/100, '4d': 0.000/100}}
+                          'a2'  : {'cr':5.263/100, '3s':5.263/100, '2s':46.153/100, '1s':46.153/100, '4d': 0.000/100},
+                          'a2a' : {'cr':4.761/100, '3s':4.761/100, '2s':61.904/100, '1s':28.571/100, '4d': 0.000/100}}
             };
 
             // Note: this makes a simplifying assumption that the user has opened
@@ -214,18 +221,26 @@
             // always fair, the resulting error is likely much less than the error
             // introduced by the many other existing issues and/or assumptions.
 
+            // Note: I adjusted the next two formulas so those are now weighted using the set[Number]Mult variables.
+            // This probably still isnt perfect, but should be more accurate. If you are wondering how I got those 
+            // multipliers, I added 20 to the dex size of each set, then divided all of those numbers by the new number
+            // for the smallest set. I then adjusted the numbers a VERY small amount to clean it up to these nice numbers.
+            // The a1 rare values are an average of all three packs, and the other sets (up to a2a) dont need averaged.
+
             const rate = ((cardType == 'rare') ? rarePackRate :
                 normalPackRate * (1 - (1 -  rates['norm']['4th'][rarity]) * 
                                       (1 -  rates['norm']['5th'][rarity])) + 
-                  rarePackRate * (1 - (1 - (rates['rare'][ 'a1'][rarity] + 
-                                            rates['rare']['a1a'][rarity] +
-                                            rates['rare'][ 'a2'][rarity]) / numSeries) ** cardsPerPack));
+                  rarePackRate * (1 - (1 - ((rates['rare'][ 'a1'][rarity] * setThreeMult) + 
+                                            (rates['rare']['a1a'][rarity] * setOneMult) +
+                                            (rates['rare'][ 'a2'][rarity] * setTwoMult) +
+                                            (rates['rare']['a2a'][rarity] * setOneMult) / setAverageDivisor) ** cardsPerPack));
 
             const expCardsPerPack = ((cardType == 'rare') ? rate :
             	normalPackRate * (rates['norm']['4th'][rarity] + rates['norm']['5th'][rarity]) +
-            	  rarePackRate *((rates['rare'][ 'a1'][rarity] + 
-            	  	              rates['rare']['a1a'][rarity] +
-                                  rates['rare'][ 'a2'][rarity]) / numSeries) * cardsPerPack);
+            	  rarePackRate *(((rates['rare'][ 'a1'][rarity] * setThreeMult) + 
+                                  (rates['rare']['a1a'][rarity] * setOneMult) +
+                                  (rates['rare'][ 'a2'][rarity] * setTwoMult) +
+                                  (rates['rare']['a2a'][rarity] * setOneMult) / setAverageDivisor) * cardsPerPack);
 
             numCardsInput = document.getElementById(`${rarity}Cards`).value;
             resultElement = document.getElementById(`${rarity}Result`);
