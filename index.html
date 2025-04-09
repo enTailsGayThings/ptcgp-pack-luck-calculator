@@ -194,23 +194,28 @@
 
         function calculateLuck(packsOpened, cardType) {
             let numCardsInput, resultElement;
+            // Set up pack constants:
             const rarePackRate = 1/2000;
             const normalPackRate = 1 - rarePackRate;
             const cardsPerPack = 5;
+            // Multipliers derived from relative size of each series:
             const setThreeMult = 2.5;
             const setTwoMult = 1.75;
             const setOneMult = 1;
+            // Multipliers for number of series that use the above multipliers:
             const numSetThree = 1;
             const numSetTwo = 1;
             const numSetOne = 2;
+            // Precomputing for later averaging:
             const setAverageDivisor = (setThreeMult * numSetThree) + (setTwoMult * numSetTwo) + (setOneMult * numSetOne)
+            // Set up rarities:
             const typeKeys = {'crown':'cr', 'three star':'3s', 'two star':'2s', 'one star':'1s', 'rare':'rare', 'four diamond':'4d'};
             const rarity = typeKeys[cardType];
 
             const rates = {
                 'norm' : {'4th' : {'cr':0.040/100, '3s':0.222/100, '2s': 0.500/100, '1s': 2.572/100, '4d': 1.666/100},
                           '5th' : {'cr':0.160/100, '3s':0.888/100, '2s': 2.000/100, '1s':10.288/100, '4d': 6.664/100}},
-                'rare' : {'a1'  : {'cr':5.088/100, '3s':5.088/100, '2s':49.122/100, '1s':40.702/100, '4d': 0.000/100},
+                'rare' : {'a1'  : {'cr':((5+5+5.263)/3)/100, '3s':((5+5+5.263)/3)/100, '2s':((50+50+47.368)/3)/100, '1s':((40+40+42.105)/3)/100, '4d': 0.000/100},
                           'a1a' : {'cr':5.555/100, '3s':5.555/100, '2s':55.555/100, '1s':33.333/100, '4d': 0.000/100},
                           'a2'  : {'cr':5.263/100, '3s':5.263/100, '2s':46.153/100, '1s':46.153/100, '4d': 0.000/100},
                           'a2a' : {'cr':4.761/100, '3s':4.761/100, '2s':61.904/100, '1s':28.571/100, '4d': 0.000/100}}
