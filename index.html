@@ -240,7 +240,7 @@
             	  rarePackRate *(((rates['rare'][ 'a1'][rarity] * setThreeMult) + 
                                   (rates['rare']['a1a'][rarity] * setOneMult) +
                                   (rates['rare'][ 'a2'][rarity] * setTwoMult) +
-                                  (rates['rare']['a2a'][rarity] * setOneMult) / setAverageDivisor) * cardsPerPack);
+                                  (rates['rare']['a2a'][rarity] * setOneMult) / setAverageDivisor) * cardsPerPack));
 
             numCardsInput = document.getElementById(`${rarity}Cards`).value;
             resultElement = document.getElementById(`${rarity}Result`);
