@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Calculate your luck in Pokémon TCG Pocket!">
     <title>Pokémon TCG Pocket Luck Calculator</title>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            margin: 20px;
             background-color: #f4f4f4;
             display: flex;
             flex-direction: column;
@@ -18,51 +19,49 @@
             background-size: 10%;
         }
         .container {
-            width: 95%;
+            width: 100%;
             max-width: 800px;
-            min-width: 400px;
+            min-width: 300px;
             background-color: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 10px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
+            font-size: 1.5rem;
+            margin: 10px 0;
         }
         .section {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .label {
             font-weight: 700;
-            margin-bottom: 20px;
-            min-height: 40px;
-        }
-        .sublabel {
-            font-weight: 450;
-            margin-right: 5px;
+            margin-bottom: 15px;
+            min-height: 30px;
+            font-size: 0.9rem;
+            text-align: center;
         }
         .input-group {
-            margin-top: 5px;
             display: flex;
             align-items: center;
             gap: 10px;
-            justify-content: flex-start;
-            flex-wrap: wrap;
+            flex: 1;
         }
-        .input-group .prompt {
+        .sublabel {
             font-weight: 450;
-            margin-right: 5px;
-            min-width: 175px;
-            text-align: right;
+            font-size: 0.9rem;
+            min-width: 120px;
         }
         .input-group input {
-            padding: 5px;
+            padding: 8px;
             font-size: 14px;
-            width: 85px;
-            margin-right: 5px;
+            width: 120px;
+            min-width: 80px;
+            box-sizing: border-box;
         }
         .button {
-            padding: 8px;
+            padding: 8px 15px;
             font-size: 14px;
             font-weight: 750;
             background-color: #84c8d9;
@@ -70,26 +69,43 @@
             border: none;
             cursor: pointer;
             border-radius: 5px;
+            white-space: nowrap;
         }
         .button:hover {
             background-color: #66abbd;
         }
+        .help-button {
+            padding: 8px 10px;
+            background-color: #f0f0f0;
+            color: #555;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            border-radius: 5px;
+            min-width: 30px;
+            text-align: center;
+        }
+        .help-button:hover {
+            background-color: #e0e0e0;
+        }
         .result {
-            margin-top: 10px;
-            margin-left: 10px;
-            margin-right: 5%;
-            font-size: 14px;
+            margin-top: 5px;
+            padding: 10px;
+            font-size: 0.85rem;
             font-weight: 300;
-            text-align: right;
+            text-align: left;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: none;
         }
         .bold-text {
             font-weight: bold;
         }
         .prob-text {
-          display: inline-block;
-          width: 60px;
-          text-align: right;
-          font-weight: bold;
+            display: inline-block;
+            width: 60px;
+            text-align: right;
+            font-weight: bold;
         }
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -99,15 +115,65 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
+        
+        @media (max-width: 600px) {
+            .input-group {
+                width: 100%;
+            }
+            .prompt {
+                flex: 1;
+                min-width: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .input-group input {
+                flex: 0 0 120px;
+                width: auto;
+            }
+            .sublabel {
+                min-width: 100px;
+                font-size: 0.85rem;
+                text-align: center; /* Add this to center text */
+                display: block; /* Ensures centering works */
+            }
+            .input-group input {
+                width: 70px;
+                min-width: 70px;
+                padding: 6px;
+            }
+            .button, .help-button {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .sublabel {
+                min-width: 80px;
+                font-size: 0.8rem;
+                text-align: center; /* Also center in smaller screens */
+                display: block; /* Ensures centering works */
+            }
+            .input-group input {
+                width: 60px;
+                min-width: 60px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Pokémon TCG Pocket Luck Calculator</h1>
-        <div class="section">
-            <label class="label"><br>Enter the number of cards you have pulled<br>(Exclude cards from wonder picks or pack points)<br><br></label>
+        <div id="topSection" class="section">
+            <label class="label" style="display: block; text-align: center;">
+                Enter the number of cards you have pulled
+                <br>(Exclude cards from wonder picks or pack points)
+                <button class="help-button" onclick="scrollToHelp()">❓</button>
+                <br/>
+            </label>
             <div class="input-group">
-                <label class="prompt">Number of 👑 cards:</label>
+                <label class="prompt">Number of 👑 cards: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
                 <input type="number" id="crCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
             <div id="crResult" class="result"></div>
@@ -121,43 +187,47 @@
         </div>
         <div class="section">
             <div class="input-group">
-                <label class="prompt">Number of ⭐⭐ cards:</label>
+                <label class="prompt">Number of ⭐⭐ cards: &nbsp; &nbsp; </label>
                 <input type="number" id="2sCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
             <div id="2sResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
-                <label class="prompt">Number of ⭐ cards:</label>
+                <label class="prompt">Number of ⭐ cards: &nbsp; &nbsp; &nbsp; &nbsp;</label>
                 <input type="number" id="1sCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
             <div id="1sResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
-                <label class="prompt">Number of ♦♦♦♦ cards:</label>
+                <label class="prompt">Number of ♦♦♦♦ cards: &nbsp; &nbsp; &nbsp;</label>
                 <input type="number" id="4dCards" placeholder="Enter value..." min="0" max="1000"/>
             </div>
             <div id="4dResult" class="result"></div>
         </div>
         <div class="section">
             <div class="input-group">
-                <label class="prompt">Rare ("god") packs:</label>
+                <label class="prompt">Rare ("god") packs: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
                 <input type="number" id="rareCards" placeholder="Enter value..." min="0" max="100"/>
             </div>
             <div id="rareResult" class="result"></div>
         </div>
         <div class="section">
-            <label class="label"><br>Enter the number of packs you have opened<br><br></label>
+            <label class="label">Enter the number of packs you have opened<br/><br/></label>
             <div class="input-group">
                 <label class="sublabel">Number of packs:</label>
                 <input type="number" id="packsOpened" placeholder="Enter value..." min="0" max="10000"/>
                 <button class="button" onclick="calculateAllLuck()">Submit</button>
+                <button class="help-button" onclick="scrollToHelp()">❓</button>
             </div>
             <div id="errorHandling" class="result"></div>
         </div>
-        <div class="section">
-            <h1 style="text-align: center;"><br><br>How to Find Your Stats</h1>
+        <div id="helpSection" class="section">
+            <h1 style="text-align: center;"><br><br>
+                How to Find Your Stats
+                <button class="help-button" onclick="scrollToTop()">🔝</button>
+            </h1>
             <div class="image-gallery" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px;">
                 <img src="images/packs.png"   alt="packs image"   style="width: 320px; height: auto;"/>
                 <label class="sublabel">Check your packs trophy to find your number of opened packs.<br>Yes, this trophy does count packs opened with hourglasses!<br>This means that you have to add any packs earned from event missions.<br>As of March 15, 2025, there have been 16 event packs available to be<br>earned this way, three of which had one card guaranteed to be ♦♦♦♦ or better</label>
@@ -166,11 +236,34 @@
                 <img src="images/search2.png" alt="search2 image" style="width: 320px; height: auto;"/>
                 <label class="sublabel">Use the filter to select a given card rarity.</label>
                 <img src="images/search3.png" alt="search3 image" style="width: 320px; height: auto;"/>
-                <label class="sublabel">Check the resulting count to find your number of cards of that rarity.<br>Exclude cards you received from wonder picks or pack points.</label>
+                <label class="sublabel">
+                    Check the resulting count to find your number of cards of that rarity.<br>Exclude cards you received from wonder picks or pack points.
+                    <button class="help-button" onclick="scrollToTop()">🔝</button>
+                </label>
             </div>
         </div>
     </div>
     <script>
+        // For Testing Purposes Only set default input values
+            // function setDefaultValues() {
+            //     document.getElementById('crCards').value = '1';
+            //     document.getElementById('3sCards').value = '5';
+            //     document.getElementById('2sCards').value = '7';
+            //     document.getElementById('1sCards').value = '47';
+            //     document.getElementById('4dCards').value = '26';
+            //     document.getElementById('rareCards').value = '0';
+            //     document.getElementById('packsOpened').value = '306';
+            // }
+            // window.onload = setDefaultValues;
+
+        // Added Scroll buttons
+        function scrollToHelp() {
+            document.getElementById('helpSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        function scrollToTop() {
+            document.getElementById('topSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function calculateAllLuck() {
             const packsEntry = document.getElementById('packsOpened').value;
             const packsOpened = parseInt(packsEntry) || 0;
@@ -313,6 +406,8 @@
                 resultElement.innerHTML += `Expected number of ${cardType} ${item}s in ${packsOpened} pack${packPlural}: <span class="bold-text">${(packsOpened*expCardsPerPack).toFixed(1)}</span><br><br>`;
                 resultElement.innerHTML += `Your ${cardType} ${item} luck is ${flavorText}<br>`;
             }
+            // Add this line to show the result
+            resultElement.style.display = 'block'; 
         }
 
         function getProbabilities(n, k, p) {
